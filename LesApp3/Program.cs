@@ -13,7 +13,29 @@ namespace LesApp3
             // Join Unicode
             Console.OutputEncoding = Encoding.Unicode;
 
+            // випадкові числа для дат
+            Random rnd = new Random();
 
+            // введемо саме просте бех перевірок додаткови - просто для показу реалізації
+            Date date1 = new Date(rnd.Next(1, 29),
+                rnd.Next(1, 13), rnd.Next(1991, DateTime.Now.Year + 1)),
+                date2 = new Date(rnd.Next(1, 29),
+                rnd.Next(1, 13), rnd.Next(1991, DateTime.Now.Year + 1));
+
+            // Виведення
+            Console.WriteLine($"\n\tЗадана 1 дата: {date1.ToString()}");
+            Console.WriteLine($"\tЗадана 2 дата: {date2.ToString()}");
+
+            Console.WriteLine($"\n\tРізниця: {Math.Abs(date1 - date2)} днів");
+
+            int days = rnd.Next(1, ushort.MaxValue);
+            Console.WriteLine($"\n\tДодамо до 1 дати наступну кількість днів: {days}");
+            Console.WriteLine($"\n\tРезультат: {(date1 + days).ToString()}");
+
+            // оновлення випадкових днів
+            days = rnd.Next(1, ushort.MaxValue);
+            Console.WriteLine($"\n\tВіднімемо від 2 дати наступну кількість днів: {days}");
+            Console.WriteLine($"\n\tРезультат: {(date2 - days).ToString()}");
 
             // repeat
             DoExitOrRepeat();

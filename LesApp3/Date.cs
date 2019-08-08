@@ -39,64 +39,76 @@ namespace LesApp3
 
         public Date() { }
 
+        /// <summary>
+        /// Конструктор
+        /// </summary>
+        /// <param name="day">день</param>
+        /// <param name="month">місяць</param>
+        /// <param name="year">рік</param>
         public Date(int day, int month, int year)
         {
-            date = new DateTime(day, month, year);
+            date = new DateTime(year, month, day);
         }
 
         /// <summary>
-        /// Сума дат
+        /// Внутрішній конвертер в DateTime
+        /// </summary>
+        /// <param name="day"></param>
+        /// <param name="month"></param>
+        /// <param name="year"></param>
+        /// <returns></returns>
+        private static DateTime ConvertToDateTime(Date date)
+            => new DateTime(date.Year, date.Month, date.Day);
+        /// <summary>
+        /// Внутрішній конвертер в Date
+        /// </summary>
+        /// <param name="datetime"></param>
+        /// <returns></returns>
+        private static Date ConvertToDate(DateTime datetime)
+            => new Date(datetime.Day, datetime.Month, datetime.Year);
+
+        /// <summary>
+        /// Корвертер в DateTime
+        /// </summary>
+        /// <param name="date"></param>
+        public static explicit operator DateTime(Date date)
+            => ConvertToDateTime(date);
+        /// <summary>
+        /// Корвертер в Date
+        /// </summary>
+        /// <param name="date"></param>
+        public static explicit operator Date(DateTime datetime)
+            => ConvertToDate(datetime);
+
+        /// <summary>
+        /// Різниця дат в днях
         /// </summary>
         /// <param name="date1"></param>
         /// <param name="date2"></param>
         /// <returns></returns>
-        public static Date operator +(Date date1, Date date2)
-        {
-            this.date = date
-
-            return new Date(date1.Day + date2.Day,
-                date1.Month + date2.Month,
-                date1.Year + date2.Year);
-        }
+        public static int operator -(Date date1, Date date2)
+            => ((DateTime)date1 - (DateTime)date2).Days;
 
         /// <summary>
-        /// Різниця дат
+        /// Додати певну кількість днів
+        /// </summary>
+        /// <param name="date"></param>
+        /// <param name="date2"></param>
+        /// <returns></returns>
+        public static Date operator +(Date date, int days)
+            => (Date)((DateTime)date).AddDays(days);
+
+        /// <summary>
+        /// Відняти певну кількість днів
         /// </summary>
         /// <param name="date1"></param>
         /// <param name="date2"></param>
         /// <returns></returns>
-        public static Date operator -(Date date1, Date date2)
-        {
-            return new Date(date1.Day - date2.Day,
-                date1.Month - date2.Month,
-                date1.Year - date2.Year);
-        }
+        public static Date operator -(Date date, int days)
+            => (Date)((DateTime)date).AddDays(-days);
 
-        /// <summary>
-        /// Сума дат
-        /// </summary>
-        /// <param name="date1"></param>
-        /// <param name="date2"></param>
-        /// <returns></returns>
-        public static Date operator +(Date date1, int date2)
-        {
-            return new Date(date1.Day + date2.Day,
-                date1.Month + date2.Month,
-                date1.Year + date2.Year);
-        }
-
-        /// <summary>
-        /// Різниця дат
-        /// </summary>
-        /// <param name="date1"></param>
-        /// <param name="date2"></param>
-        /// <returns></returns>
-        public static Date operator -(Date date1, Date date2)
-        {
-            return new Date(date1.Day - date2.Day,
-                date1.Month - date2.Month,
-                date1.Year - date2.Year);
-        }
+        public override string ToString()
+            => date.ToShortDateString();
 
     }
 }
